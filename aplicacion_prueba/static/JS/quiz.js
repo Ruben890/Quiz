@@ -3,7 +3,6 @@ const forms_questions = document.getElementById("forms");
 const crf_tokens = document.getElementsByName("csrfmiddlewaretoken");
 const answer = [...document.getElementsByClassName("answers")];
 
-const li = document.getElementById("respustas");
 const url = window.location.href;
 const consumir_json = async () => {
   try {
@@ -44,8 +43,21 @@ const DataSave = () => {
       }
     }
   });
+
+  $.ajax({
+    type: "POST",
+    url: `$${url}/save/`,
+    data: data,
+    success: function (response) {
+      console.log(response);
+    },
+    error: function (error) {
+      console.error(error);
+    },
+  });
 };
 
 forms_questions.addEventListener("submit", (e) => {
   e.preventDefault();
+  DataSave();
 });
