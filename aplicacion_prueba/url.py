@@ -5,7 +5,7 @@ urlpatterns = [
     path('<int:pk>', Quiz.as_view(), name='quiz'),
     path('register', Register.as_view(), name='register'),
     path('<int:pk>/data/', quiz_view.as_view(), name='quiz_data'),
-    path('save_quiz/<int:pk_forms>', save_quiz.as_view(), name='save_quiz'),
+    path('<int:pk>/Save/', save_quiz.as_view(), name='save_quiz'),
     path('login', Login.as_view(), name='login'),
     path('logaud', Logaud.as_view(), name='logaud')
 ]

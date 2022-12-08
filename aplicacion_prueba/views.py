@@ -39,13 +39,12 @@ class quiz_view(LoginRequiredMixin, View):
         })
 
 
-class save_quiz(View):
-    def post(self, request, *args, **kwargs):
-        user = get_object_or_404(User, pk=request.user.pk)
-        form = get_object_or_404(Forms, pk=request.forms.pk)
-        print(f'user:{user}'
-              f'forms_id:{form}')
-        redirect('homepage')
+class save_quiz(LoginRequiredMixin, View):
+    def post(self, request, pk, *args, **kwargs):
+        print(request.POST)
+        return JsonResponse({
+            'text': "word"
+        })
 # * login
 
 

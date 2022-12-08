@@ -81,7 +81,8 @@
       <section>
         <h1>{{ quiz.title }}</h1>
         <hr />
-        <form class="form-group" method="post">
+        <form class="form-group" method="post" id="forms">
+          {% csrf_token %}
           <div id="forms_questions"></div>
 
           <button class="btn btn-primary">Enviar</button>

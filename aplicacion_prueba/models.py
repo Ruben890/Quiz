@@ -44,7 +44,7 @@ class Question(models.Model):
     question = models.TextField(
         verbose_name='question', null=False, blank=False)
     points = models.IntegerField(
-        choices=puntos, max_length=2, verbose_name='point value')
+        choices=puntos, verbose_name='point value')
 
     def __str__(self):
         return self.question
