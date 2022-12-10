@@ -16,7 +16,7 @@ const consumir_json = async () => {
         `;
         for (const iterator of answers) {
           preguntas += `<li style="display:block;"><label for="${question}">
-          <input type="radio" name="answers" id="${question}" class="answers" value="${iterator}"/>
+          <input type="radio" name="${question}" id="${question}-${iterator}" class="answers" value="${iterator}"/>
           ${iterator}  
           </label></li>`;
         }
@@ -56,7 +56,6 @@ const DataSave = () => {
     },
   });
 };
-
 
 forms_questions.addEventListener("submit", (e) => {
   e.preventDefault();

@@ -43,7 +43,7 @@ class save_quiz(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         print(request.POST)
         return JsonResponse({
-            'text': "word"
+            'text': "prueba quiz"
         })
 # * login
 
