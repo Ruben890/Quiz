@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from .choices import puntos, nivel
-
+import random
 
 class Profile(models.Model):
     user = models.OneToOneField(
@@ -33,8 +33,9 @@ class Forms(models.Model):
         return f'{self.title}'
 
     def get_question(self):
-        return self.forms_question.all()
-
+        questions = list(self.forms_question.all())
+        random.shuffle(questions)
+        return questions
 
 class Question(models.Model):
     form = models.ForeignKey(

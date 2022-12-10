@@ -38,10 +38,19 @@ class quiz_view(LoginRequiredMixin, View):
             'time': quiz.time
         })
 
-
 class save_quiz(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
-        print(request.POST)
+        data = request.POST
+        questions = []
+        data_ = dict(data.lists())
+        data_.pop('csrfmiddlewaretoken')
+
+        for k in data_.keys():
+            print('key:', k)
+            question = Question.objects.get(question=k)
+            questions.append(question)
+        print(questions)
+
         return JsonResponse({
             'text': "prueba quiz"
         })

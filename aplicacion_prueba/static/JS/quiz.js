@@ -1,7 +1,7 @@
 const contents = document.getElementById("forms_questions");
 const forms_questions = document.getElementById("forms");
 const crf_tokens = document.getElementsByName("csrfmiddlewaretoken");
-const answer = [...document.getElementsByClassName("answers")];
+
 
 const url = window.location.href;
 const consumir_json = async () => {
@@ -32,14 +32,15 @@ window.addEventListener("load", async () => {
 });
 
 const DataSave = () => {
+  const answer = [...document.getElementsByClassName("answers")];
   const data = {};
   data["csrfmiddlewaretoken"] = crf_tokens[0].value;
-  answer.forEach((answers) => {
-    if (answers.checked) {
-      data[answers.name] = answers.value;
+  answer.forEach((element) => {
+    if (element.checked) {
+      data[element.name] = element.value;
     } else {
-      if (!data[answers.name]) {
-        data[answers.name] = null;
+      if (!data[element.name]) {
+        data[element.name] = null;
       }
     }
   });
