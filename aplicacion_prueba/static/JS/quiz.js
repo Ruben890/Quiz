@@ -46,7 +46,7 @@ const DataSave = () => {
 
   $.ajax({
     type: "POST",
-    url: `$${url}/save/`,
+    url: `${url}/save/`,
     data: data,
     success: function (response) {
       console.log(response);
