@@ -38,6 +38,7 @@ class quiz_view(LoginRequiredMixin, View):
             'time': quiz.time
         })
 
+
 class save_quiz(LoginRequiredMixin, View):
     def post(self, request, pk, *args, **kwargs):
         data = request.POST
@@ -51,6 +52,11 @@ class save_quiz(LoginRequiredMixin, View):
             questions.append(question)
         print(questions)
 
+        user = request.user
+        quiz = Forms.objects.get(pk=pk)
+
+        score: int = 0
+        multiplase = 100 / question.points
         return JsonResponse({
             'text': "prueba quiz"
         })
