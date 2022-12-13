@@ -47,8 +47,6 @@ class Question(models.Model):
                              on_delete=models.CASCADE, null=True, blank=True)
     question = models.TextField(
         verbose_name='question', null=False, blank=False)
-    points = models.IntegerField(
-        choices=puntos, verbose_name='point value')
 
     def __str__(self):
         return self.question

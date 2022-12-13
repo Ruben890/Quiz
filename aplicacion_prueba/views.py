@@ -56,6 +56,7 @@ class save_quiz(LoginRequiredMixin, View):
         quiz = Forms.objects.get(pk=pk)
         score: int = 0
         result = []
+        mutiplier = 100 / quiz.total_score_question
         corect_answer = None
         for q in questions:
             a_select = request.POST.get(q.question)
@@ -74,7 +75,7 @@ class save_quiz(LoginRequiredMixin, View):
                     {str(q): {'corect_answer': corect_answer, 'answers': a_select, 'complete': complete}})
             else:
                 result.append({str(q): 'not answers'})
-        _score = question.points
+        _score = score * mutiplier
         Resuls.objects.create(quiz=quiz, user=user, score=_score)
 
         if _score >= quiz.total_score_question:
