@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .choices import puntos, nivel
 import random
 
+
 class Profile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, null=True, blank=True, related_name='Profile', unique=True)
@@ -27,7 +28,8 @@ class Forms(models.Model):
         verbose_name='descriction', blank=False, null=False)
     nivel = models.CharField(choices=nivel, max_length=10,
                              verbose_name='nivel', null=False, blank=False)
-    complete = models.BooleanField(default=False, verbose_name='complete')
+    total_score_question = models.IntegerField(
+        default=0, verbose_name="required points", blank=False, null=False)
 
     def __str__(self):
         return f'{self.title}'
@@ -36,6 +38,7 @@ class Forms(models.Model):
         questions = list(self.forms_question.all())
         random.shuffle(questions)
         return questions
+
 
 class Question(models.Model):
     form = models.ForeignKey(
@@ -76,9 +79,11 @@ class Answers(models.Model):
 class Resuls(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='Resuls_users')
-    quetions = models.ForeignKey(
-        Question, on_delete=models.CASCADE, related_name='resuls_quetions')
+    quiz = models.ForeignKey(
+        Forms, on_delete=models.CASCADE, related_name='Resuls')
     score = models.FloatField(default=0, null=True)
+    complete = models.BooleanField(
+        default=False, verbose_name="complete", null=False, blank=False)
 
-    def __str__(self):
-        return self.pk
+    def __str__(self) -> str:
+        return f'user:{self.user} quiz:{self.quiz}'

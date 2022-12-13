@@ -2,7 +2,6 @@ const contents = document.getElementById("forms_questions");
 const forms_questions = document.getElementById("forms");
 const crf_tokens = document.getElementsByName("csrfmiddlewaretoken");
 
-
 const url = window.location.href;
 const consumir_json = async () => {
   try {

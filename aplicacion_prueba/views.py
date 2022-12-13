@@ -8,13 +8,13 @@ from django.contrib.auth import login
 from django.http import JsonResponse
 from .forms import RegiterForm
 from django.contrib.auth.admin import User
-from .models import Profile, Question, Answers, Forms
+from .models import Profile, Question, Answers, Forms, Resuls
 from django.core.paginator import Paginator
 
 
 class Homepage(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'index.html', {'form': Forms.objects.filter(complete=True),
+        return render(request, 'index.html', {'form': Forms.objects.all(),
                                               'user': Profile.objects.all()})
 
 
@@ -54,12 +54,35 @@ class save_quiz(LoginRequiredMixin, View):
 
         user = request.user
         quiz = Forms.objects.get(pk=pk)
-
         score: int = 0
-        multiplase = 100 / question.points
-        return JsonResponse({
-            'text': "prueba quiz"
-        })
+        result = []
+        corect_answer = None
+        for q in questions:
+            a_select = request.POST.get(q.question)
+            if a_select != "":
+                complete = Resuls.complete = True
+                questions_answer = Answers.objects.filter(question=q)
+                for a in questions_answer:
+                    if a_select == a.response:
+                        if a.correct:
+                            score += question.points
+                            corect_answer = a.response
+                        else:
+                            if a.correct:
+                                corect_answer = a.response
+                result.append(
+                    {str(q): {'corect_answer': corect_answer, 'answers': a_select, 'complete': complete}})
+            else:
+                result.append({str(q): 'not answers'})
+        _score = question.points
+        Resuls.objects.create(quiz=quiz, user=user, score=_score)
+
+        if _score >= quiz.total_score_question:
+            return JsonResponse({'passed': True, 'score': _score, 'Resuls': result})
+        else:
+            return JsonResponse({
+                'Passed': False,
+            })
 # * login
 
 
