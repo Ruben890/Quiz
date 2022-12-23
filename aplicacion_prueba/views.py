@@ -75,65 +75,56 @@ class save_quiz(LoginRequiredMixin, View):
 
         questions = []
         data_ = dict(data.lists())
-
         data_.pop('csrfmiddlewaretoken')
 
         for k in data_.keys():
-
             print('key:', k)
-
             question = Question.objects.get(question=k)
             questions.append(question)
-        print(questions)
+        # print(questions)
 
         user = request.user
-
         quiz = QUiz.objects.get(pk=pk)
-
         score: int = 0
-
         result = []
-
-        mutiplier = 100 / quiz.total_score_question
-
         corect_answer = None
         for q in questions:
 
             a_select = request.POST.get(q.question)
 
             if a_select != "":
-
-                complete = Resuls.complete = True
-
                 questions_answer = Answers.objects.filter(question=q)
-
                 for a in questions_answer:
                     if a_select == a.response:
                         if a.correct:
+                            score += 1
                             corect_answer = a.response
                         else:
                             if a.correct:
-
                                 corect_answer = a.response
                 result.append(
 
-                    {str(q): {'corect_answer': corect_answer, 'answers': a_select, 'complete': complete}})
+                    {str(q): {'corect_answer': corect_answer, 'answers': a_select}})
             else:
 
                 result.append({str(q): 'not answers'})
 
-        _score = score * mutiplier
-
-        Resuls.objects.create(quiz=quiz, user=user, score=_score)
+        _score = score * 100 / quiz.number_of_questions
 
         if _score >= quiz.total_score_question:
 
+            Resuls.objects.create(quiz=quiz, user=user,
+                                  score=_score, complete=True)
             return JsonResponse({'passed': True, 'score': _score, 'Resuls': result})
         else:
 
+            Resuls.objects.create(quiz=quiz, user=user,
+                                  score=_score, complete=False)
             return JsonResponse({
 
                 'Passed': False,
+                'score': _score,
+                'Resuls': result
 
             })
 

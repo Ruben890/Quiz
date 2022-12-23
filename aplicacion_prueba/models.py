@@ -30,6 +30,8 @@ class QUiz(models.Model):
                              verbose_name='nivel', null=False, blank=False)
     total_score_question = models.IntegerField(
         default=0, verbose_name="required points", blank=False, null=False)
+    number_of_questions = models.IntegerField(
+        default=0, blank=False, null=False, verbose_name="number of questions")
 
     def __str__(self):
         return f'{self.title}'
