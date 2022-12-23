@@ -8,13 +8,13 @@ from django.contrib.auth import login
 from django.http import JsonResponse
 from .forms import RegiterForm
 from django.contrib.auth.admin import User
-from .models import Profile, Question, Answers, Forms, Resuls
+from .models import Profile, Question, Answers, QUiz, Resuls
 from django.core.paginator import Paginator
 
 
 class Homepage(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'index.html', {'form': Forms.objects.all(),
+        return render(request, 'index.html', {'form': QUiz.objects.all(),
                                               'user': Profile.objects.all()})
 
 
@@ -26,7 +26,7 @@ class Quiz(LoginRequiredMixin, View):
 
 class quiz_view(LoginRequiredMixin, View):
     def get(self, request, pk, *args, **kwargs):
-        quiz = Forms.objects.get(pk=pk)
+        quiz = QUiz.objects.get(pk=pk)
         questions = []
         for i in quiz.get_question():
             answers = []

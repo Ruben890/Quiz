@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Question, Answers, Forms, Resuls
+from .models import Profile, Question, Answers, QUiz, Resuls
 
 
 @admin.register(Profile)
@@ -22,7 +22,7 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ('question', 'response_question__correct')
 
 
-@admin.register(Forms)
+@admin.register(QUiz)
 class FormAdmin(admin.ModelAdmin):
     list_display = ('title',)
     search_fields = ('title', 'forms_question__question',)

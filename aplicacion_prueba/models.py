@@ -8,14 +8,14 @@ class Profile(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, null=True, blank=True, related_name='Profile', unique=True)
     imagen = models.ImageField(
-        default='pregunta.jpg', verbose_name='imagen_profile')
+        default='questions.png', verbose_name='imagen_profile')
     total_score = models.IntegerField(default=0, verbose_name='total_score')
 
     def __str__(self):
         return self.user.username
 
 
-class Forms(models.Model):
+class QUiz(models.Model):
     title = models.CharField('title', max_length=250,
                              null=False, blank=False, unique=True)
     author = models.ForeignKey(
@@ -42,7 +42,7 @@ class Forms(models.Model):
 
 class Question(models.Model):
     form = models.ForeignKey(
-        'Forms', on_delete=models.CASCADE, related_name='forms_question')
+        'QUiz', on_delete=models.CASCADE, related_name='forms_question')
     user = models.ForeignKey(User, verbose_name="user_question",
                              on_delete=models.CASCADE, null=True, blank=True)
     question = models.TextField(
@@ -78,7 +78,7 @@ class Resuls(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='Resuls_users')
     quiz = models.ForeignKey(
-        Forms, on_delete=models.CASCADE, related_name='Resuls')
+        QUiz, on_delete=models.CASCADE, related_name='Resuls')
     score = models.FloatField(default=0, null=True)
     complete = models.BooleanField(
         default=False, verbose_name="complete", null=False, blank=False)
