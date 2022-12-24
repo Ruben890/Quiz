@@ -25,6 +25,7 @@
       <nav>
         <ul class="main">
           {% if request.user.is_authenticated %} {% for k in user %} {% if request.user == k.user %}
+          
           <img
             src="{{k.imagen.url}}"
             alt="imagens de perfil"

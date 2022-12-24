@@ -1,34 +1,33 @@
 const contents = document.getElementById("forms_questions");
 const forms_questions = document.getElementById("forms");
 const crf_tokens = document.getElementsByName("csrfmiddlewaretoken");
-
 const url = window.location.href;
-const consumir_json = async () => {
-  try {
-    const response = await fetch(`${url}/data/`);
-    const datos = await response.json();
-    let preguntas = "";
-    datos.data.forEach((element) => {
-      for (let [question, answers] of Object.entries(element)) {
-        preguntas += `
-        <h3>${question}</h3>
-        `;
-        for (const iterator of answers) {
-          preguntas += `<li style="display:block;"><label for="${question}">
-          <input type="radio" name="${question}" id="${question}-${iterator}" class="answers" value="${iterator}"/>
-          ${iterator}  
-          </label></li>`;
+
+$.ajax({
+    type: "GET",
+    url: `${url}/data/`,
+    dataType: "json",
+    success:  (response) => {
+      const data = response.data;
+      let preguntas = ''
+      data.forEach(element => {
+        for (let [question, answers] of Object.entries(element)) {
+          preguntas += `<h3>${question}</h3>`;
+          for (const response of answers) {
+            preguntas += `<li style="display:block;"><label for="${question}">
+            <input type="radio" name="${question}" id="${question}-${response}" class="answers" value="${response}"/>
+            ${response}  
+            </label></li>`;
+          }
         }
-      }
-    });
-    contents.innerHTML = preguntas;
-  } catch (error) {
-    console.log(error);
-  }
-};
-window.addEventListener("load", async () => {
-  await consumir_json();
-});
+        contents.innerHTML = preguntas
+      });
+    },
+    error:  (data) => {
+      console.error(data);}
+      
+})
+
 
 const DataSave = () => {
   const answer = [...document.getElementsByClassName("answers")];
@@ -49,7 +48,10 @@ const DataSave = () => {
     url: `${url}/save/`,
     data: data,
     success: function (response) {
-      console.log(response);
+      const result = response.result
+      contents.classList('not-visible');
+      console.log(result);
+      
     },
     error: function (error) {
       console.error(error);
