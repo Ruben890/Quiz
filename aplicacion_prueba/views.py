@@ -78,10 +78,8 @@ class save_quiz(LoginRequiredMixin, View):
         data_.pop('csrfmiddlewaretoken')
 
         for k in data_.keys():
-            print('key:', k)
             question = Question.objects.get(question=k)
             questions.append(question)
-        # print(questions)
 
         user = request.user
         quiz = QUiz.objects.get(pk=pk)
