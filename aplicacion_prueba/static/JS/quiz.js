@@ -10,7 +10,6 @@ $.ajax({
     success:  (response) => {
       const data = response.data;
       const time =  response.time
-      
       let preguntas = ''
       data.forEach(element => {
         for (let [question, answers] of Object.entries(element)) {
@@ -52,7 +51,6 @@ const DataSave = () => {
     success:  (response) => {
       const result = response.Resuls
       forms_questions.classList.add('d-none');
-      console.log(result);
       result.forEach(element => {
         const div = document.createElement('div');
         for (const [question, response] of Object.entries(element)){
