@@ -20,7 +20,6 @@
 
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    
   </head>
   <body>
     <header>
@@ -80,15 +79,17 @@
       </div>
     </header>
 
-    <main class="container" id='constens'>
+    <main class="container" id="constens">
       <section>
-        <h1>{{ quiz.title }}</h1>
+        <nav style="display: flex; justify-content: space-between" id="nav">
+          <h1>{{ quiz.title }}</h1>
+        </nav>
         <hr />
         <form class="form-group" method="post" id="forms">
           {% csrf_token %}
           <div id="forms_questions"></div>
 
-          <button class="btn btn-primary" type="submit">Enviar</button>
+          <button class="btn btn-primary" type="submit" id="btn">Enviar</button>
         </form>
       </section>
     </main>

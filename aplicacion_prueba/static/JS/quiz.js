@@ -4,12 +4,34 @@ const crf_tokens = document.getElementsByName("csrfmiddlewaretoken");
 const url = window.location.href;
 const container = document.getElementById('constens');
 
+
+
+
+
+
+
 $.ajax({
     type: "GET",
     url: `${url}/data/`,
+    dataType: "json",
     success:  (response) => {
       const data = response.data;
       const time =  response.time
+      const segundos = 0
+      const p = document.createElement("p");
+      const CuentaRegresiva= (time,segundos) => {
+       segundos ? (segundos <= 0) :segundos = 60; p.innerHTML = `<b>${time}:${segundos}min</b>`
+      
+       
+                
+      }
+      CuentaRegresiva(time, segundos)
+
+      
+
+
+
+      nav.appendChild(p)
       let preguntas = ''
       data.forEach(element => {
         for (let [question, answers] of Object.entries(element)) {
