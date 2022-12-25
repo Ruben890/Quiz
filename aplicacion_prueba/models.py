@@ -80,8 +80,8 @@ class Resuls(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='Resuls_users')
     quiz = models.ForeignKey(
-        QUiz, on_delete=models.CASCADE, related_name='Resuls')
-    score = models.FloatField(default=0, null=True)
+        QUiz, on_delete=models.CASCADE, related_name='Resuls', null=False, blank=False)
+    score = models.FloatField(default=0, null=True, blank=False)
     complete = models.BooleanField(
         default=False, verbose_name="complete", null=False, blank=False)
 

@@ -15,12 +15,14 @@ const CuentaRegresiva = (time) => {
   const timer = setInterval(() => {
     segundos--;
     if (segundos < 0) (segundos = 59), minutes--;
-    if (segundos.toString().length < 2) displaySecond = "0" + segundos; else displaySecond = segundos
-    if (minutes.toString().length < 2) displayMin = "0" + minutes; else displayMin = minutes;
+    if (segundos.toString().length < 2) displaySecond = "0" + segundos;
+    else displaySecond = segundos;
+    if (minutes.toString().length < 2) displayMin = "0" + minutes;
+    else displayMin = minutes;
 
     if (minutes == 0 && segundos == 0) {
-      clearInterval(displayMin, displaySecond);
-      btn.click()
+      btn.click();
+      clearInterval(timer);
     }
     p.innerHTML = `<b>${displayMin}:${displaySecond}</b>min`;
   }, 1000);
@@ -89,11 +91,14 @@ const DataSave = () => {
           div.classList.add(...cls);
           container.appendChild(div);
 
-          if (response["corect_answer"] === null) {
+          if (
+            response["corect_answer"] === null ||
+            response["corect_answer"] === undefined
+          ) {
             const p = document.createElement("p");
             p.classList.add("fs-5", "text-white");
             div.appendChild(p);
-            p.innerHTML += "no es la respuesta correcta";
+            p.innerHTML += "respuesta incorrecta";
             div.classList.add("bg-danger");
           } else {
             const corect_answer = response["corect_answer"];
